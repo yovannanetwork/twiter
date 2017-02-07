@@ -1,24 +1,26 @@
-var textarea = document.getElementById("listado");
-var listTarea =[];
-listTarea = [
-	{nombre:textarea, isDone: false}
-];
-function onClickButon(){
-	drawTasksList();
-}
 
-function drawTasksList(){
-	if(textarea.value == ""){
-		alert("ingrese texto");
-	}else{ 
-		var lista = document.getElementById("lista");
-		for(var i in listTarea){
-			var html = "<li class='li'" + "><input type='checkbox' onclick='tacharInput("+i+")' id='check'"+ (listTarea[i].isDone?"checked":"") + ">" + listTarea[i].nombre.value + "<i class='glyphicon glyphicon-trash' id='tacho' onclick='removeTrash()'>" + "</li>";
-			lista.innerHTML += html;
-		}
+var listTarea =[];
+
+function onClickButon(){
+	var textarea = document.getElementById("listado");
+	//Aumentar el objeto array
+	if(textarea.value != ""){
+		listTarea.push({nombre:textarea.value, isDone: false});
+		drawTasksList();
+	}else{
+		alert("ingrese tarea.")
 	}
 	textarea.value = "";
 	textarea.focus();
+	
+}
+
+function drawTasksList(){		
+	for(var i in listTarea){
+			var html = "<li class='li'" + "><input type='checkbox' onclick='tacharInput("+i+")' onclick='lineThrough()' id='check'"+ (listTarea[i].isDone?"checked":"") + ">" + listTarea[i].nombre + "<i class='glyphicon glyphicon-trash' id='tacho' onclick='removeTrash()'>" + "</li>";
+	}
+	var lista = document.getElementById("lista");
+	lista.innerHTML += html;	
 }
 function removeTrash(){
 	var lista = document.getElementById("lista");
@@ -26,8 +28,9 @@ function removeTrash(){
 	lista.removeChild(tacho.parentNode);
 }
 function tacharInput(i){
-	if(listTarea[i].isDone==false){
+	if(listTarea[i].isDone===false){
 		listTarea[i].isDone = true;
+		
 	}else{
 		listTarea[i].isDone = false;
 	}
@@ -43,17 +46,6 @@ function lineThrough(i){
 	}
 }
 
-/*
-function tacharCheck(_mark){
-	if(listTarea[_mark].isDone == false){
-		listTarea[_mark].isDone = true;
-		lista.childNodes[_mark].style.textDecoration = "line-through";
-	}else{
-		listTarea[_mark].isDone = false;
-		lista.childNodes[_mark].style.textDecoration = "none";
-	}
-}
-*/
 
 
 
